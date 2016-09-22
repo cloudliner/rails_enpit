@@ -1,0 +1,17 @@
+language: ruby
+rvm:
+- 2.2.5
+deploy:
+  provider: heroku
+  api_key:
+    secure: oIDnFZIHdonVzoHn+zmzG3K8ac+F3xE+V8L4O293LR6ykX9jRkbxkCJhuObe0MCA4V5KdRfdM1CAnppcs8PmNYhJ+7OIonHFtz4mXRNtMNvAfwswWUI4Q4Q8O1/tW6v6MrAdnDX4R+wT7thDEnxttHB5uVJcav7eoPhuFlpz5D/99D/AXUyLa4FZqKrjviHBrwCelLbbj9kADwnNrpA6dYLBeG9ZDUsss1SQ3SriBkn2Od0267oTu3a4M8FWXgIMp/e4K0R3QEuIWQ5WVW7es+eBn4SSU67eIQNRJSStVxI4grRQ3sij/LIrB/ys2CJbGtVCVjgE7MIbk9Lqqx7SiEe0zXXUdZ/TVbYSOVW9/dI8r0+AV7efKoTxE2r5o7gRO/fGhNAWyRIRNysUvcPQj5Yo41oYnkUkmWI9ul+h23e4LinxUwPMpTpmMMuVrS4RLt3BWVcgxYK0jcYPBvVoELWliBDgUCqagPpp4yLquWhBi9DtJR9qoKvNBt5nb20nui6W70/uaqfPxpS1Dvmadpzx1ArAUOOIxq73Dn7VFtIkkRuYABmT4KGwvKp66GnxZd+iFFV0q0MnyGs4Uj771LIrp6+kjSCUco5b/SXGjITBqbmGudFlqeSuQYCDsqVEWwzSaOc4ycUP+MvIoMFCFAvkBeNuSJgcVbllXwahOUU=
+  app: evening-lowlands-25443
+  on:
+    repo: cloudliner/rails_enpit
+addons:
+  postgreasql: "9.3"
+before_script:
+  - psql -c 'create database travis_ci_test;' -U postgres
+  - cp config/database.yml.travis config/database.yml
+  - rake db:migrate RAILS_ENV=test # is this really needed?
+
